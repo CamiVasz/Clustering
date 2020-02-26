@@ -1,0 +1,85 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Credit card fraud detection using a clustering approach\\
+}
+
+\author{\IEEEauthorblockN{María Camila Vásquez Correa}
+\IEEEauthorblockA{\textit{Mathematics department} \\
+\textit{Universidad EAFIT}\\
+Medellín, Colombia \\
+mvasqu49@eafit.edu.co}
+}
+
+\maketitle
+
+\begin{abstract}
+In this article is presented a comparison of 5 clustering algorithms to segregate data on credit card fraud detection, these algorithms are: k-means, an extension to k-means, fuzzy c-means, subtractive and mountain clustering. These algorithms are first evaluated in the iris dataset, and finally in our case study. Several metrics for finding the clusters are compared and a variation of parameters is performed.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Cluster, k-means, credit card, fraud.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Given the current global economic
+context, increasing efforts are being made to both prevent and detect fraud. Credit card financial products can derive in unsecured and unplanned credit card risks and should not be underestimated. Stopping credit card fraud has become a hot issue in academia and industry. In the field of credit card fraud, the mistake of letting go of fraudulent transactions is much more expensive than mistakenly intercepting normal transactions, and the number of fraudulent transactions is far less than the normal number of transactions. \\
+Clustering, as unsupervised data mining technique, deals with the problem of dividing a given set of entities into meaningful subsets. Clusters resulted from this data segmentation are required to be to be homogeneous and/or well separated, entities within the same group being similar while entities within different groups being dissimilar. 
+
+\section{Literature review}
+A survey for the methods on fraud detection via clustering is presented in\cite{Sabau2012}. This survey takes into account
+
+\section{Methodology}
+
+\subsection{Data}
+\begin{enumerate}
+    \item \textit{Toy dataset: }The initial test dataset for the algorithms was the iris dataset, that contains 3 classes of iris flowers (versicolor, virginica and setosa) and has 4 features (sepal length and height and petal length and width) with 150 samples.
+    \item \textit{Credit card dataset: } This dataset was downloaded from Kaggle (\url{https://www.kaggle.com/mlg-ulb/creditcardfraud}) and contains transactions made by credit cards in September 2013 by european cardholders. This dataset presents transactions that occurred in two days, where we have 492 frauds out of 284,807 transactions. The dataset is highly unbalanced, the positive class (frauds) account for 0.172\% of all transactions.
+\end{enumerate}
+
+\subsection{Pipeline}
+\begin{enumerate}
+    \item \textit{Preprocessing: }Elimination of missing values and normalization. The normalization method performed is dividing by the maximum of each feature. This to ensure that all the data points are mapped into the hypercube [0,1].
+    \item \textit{Statistical analysis:} In order to asses the complexity of the problem, several statistical tests were taken, including normality tests, Independence tests, dsitribution tests and stationarity tests. 
+    \item \textit{Feature selection and extraction: }This step was performed differently in both datasets, the toy dataset and the credit card dataset. In the first one, 4 characteristics were extracted, augmenting the dimension from 4 to 8. In the second one, 28 characteristics were provided, and a reduction of dimensionality via PCA was performed.
+    \item \textit{Embbeding: }The T-distributed Stochastic Neighbor Embedding was used as embbeding algorithm, due to its distance conserving property. This embbeding was used to visualize the results and also to learn in lower dimensions.
+    \item \textit{Learning: }5 clustering algorithms were implemented in both datasets, performing the learning task in the higher, medium and lower dimensional space and comparing the results.
+\end{enumerate}
+\subsection{Algorithms}
+MISSING DESCRIPTION
+\begin{enumerate}
+    \item \textit{Subtractive clustering}
+    \item \textit{Mountain clustering}
+    \item \textit{k-means clustering}
+    \item \textit{Fuzzy c-means clustering}
+\end{enumerate}
+\subsection{Validation}
+Both datasets contain groundtruths for the classes of each sample. The previously presented algorithms will be evaluated using some indices (intra cluster and extra cluster) with both of the datasets (MISSING: Which indices to use?)
+
+\section{Results}
+MISSING FIGURES. 
+\subsection{Iris dataset}
+
+\subsection{Credit card dataset}
+MISSING
+
+\section{Conclusions}
+MISSING
+\nocite{*}
+\bibliography{ref}
+\bibliographystyle{IEEEtran}
+
+
+\end{document}
