@@ -504,9 +504,8 @@ Both datasets contain groundtruths for the classes of each sample. The previousl
 
 \subsection{Credit card dataset}
 This dataset includes two classes, highly unbalanced: fraud or not fraud.
-\begin{itemize}
-    \item \textbf{Subtractive clustering:}\\
-    In Tables \ref{tab:c1_n_s}, \ref{tab:c2_n_s} and \ref{tab:ce_n_s} are shown the number of clusters found for the three datasets of credit card fraud. In this case, we observe that the cosine norm achieves 2 clusters, the expected ones. But probably more clusters are not a wrong performance, rather than a different form of viewing the data. We will refer then to the validation indices to see when the performance is better.
+\subsubsection{Subtractive clustering}
+    In Tables \ref{tab:c1_n_s}, \ref{tab:c2_n_s} and \ref{tab:ce_n_s} are shown the number of clusters found for the three datasets of credit card fraud. In this case, we observe that the cosine norm achieves 2 clusters, the expected ones. But probably more clusters are not a wrong performance, rather than a different form of viewing the data. We will refer then to the validation indices to see when the performance is better. Also, in Figure~\ref{fig:credit_s_i} is shown the initial density function for the credit card reduced dataset and $r_a = 0.5$, with the euclidean distance. Figure~\ref{fig:credit_s_f} shows the final state.
     \begin{table}[ht!]
         \centering
         \begin{tabular}{lrrr}
@@ -551,6 +550,8 @@ This dataset includes two classes, highly unbalanced: fraud or not fraud.
         \caption{Number of clusters found by the subtractive algorithm for the credit card embbeded dataset.}
         \label{tab:ce_n_s}
     \end{table}
+    
+    The algorithm has an emergency stopping criteria, the number of iterations. Due to the fact that they are 100, is clear that for the euclidean distance in the embbeded dataset much more clusters are achieved. This may be due to the spatial distribution of the data, as shwon in the results of Figure~\ref{fig:credit_s}.
     
     \begin{table}[ht!]
         \centering
@@ -650,25 +651,120 @@ This dataset includes two classes, highly unbalanced: fraud or not fraud.
     
     \begin{figure}[ht!]
         \centering
-        \includegraphics{figures/credit/credit_s_i.png}
+        \includegraphics[scale = 0.4]{figures/credit/credit_s_i.png}
         \caption{Initial density function for the credit card dataset in the subtractive clustering algorithm.}
         \label{fig:credit_s_i}
     \end{figure}
     
     \begin{figure}[ht!]
         \centering
-        \includegraphics{figures/credit/credit_s_f.png}
+        \includegraphics[scale = 0.4]{figures/credit/credit_s_f.png}
         \caption{Final density function for the credit card dataset in the subtractive clustering algorithm.}
-        \label{fig:credit_s_i}
+        \label{fig:credit_s_f}
     \end{figure}
     
     \begin{figure}[ht!]
         \centering
-        \includegraphics{figures/credit/credit_s.png}
+        \includegraphics[scale = 0.4]{figures/credit/credit_s.png}
         \caption{Clustering for the credit card dataset in the subtractive clustering algorithm.}
-        \label{fig:credit_s_i}
+        \label{fig:credit_s}
     \end{figure}
-\end{itemize}
+\subsubsection{Mountain clustering} Tables \ref{tab:c2_n_m} and \ref{tab:ce_n_m} show the number of clusters found by the mountain algorithm in the embbeded and reduced dataset, with variations in the smoothing paramenter $\sigma$ and the metric.
+
+\begin{table}[ht!]
+    \centering
+   \begin{tabular}{lrrr}
+    \toprule
+    $\sigma$ &  euclidean &  cosine &  cityblock \\
+    \midrule
+    0.4 &          8 &       7 &          2 \\
+    0.5 &          4 &       5 &          2 \\
+    0.7 &          3 &       3 &          2 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Number of clusters found by the mountain algorithm in the reduced credit card dataset.}
+    \label{tab:c2_n_m}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+    \toprule
+    $\sigma$ &  euclidean &  cosine &  cityblock \\
+    \midrule
+    0.4 &         10 &       5 &          9 \\
+    0.5 &          9 &       4 &         10 \\
+    0.7 &          9 &       4 &          9 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Number of clusters found by the mountain algorithm in the embbeded credit card dataset.}
+    \label{tab:ce_n_m}
+\end{table}
+
+In this case, we observe that the number of clusters is reduced in comparison with the subtractive algorithm, however, the metric that only finds the two existing clusters in the dataset is the manhattan, and only in the reduced one. The embbeded one, again, does not seem to provide enough information to perform a good clustering.
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        $\sigma$ &  euclidean &    cosine &  cityblock \\
+        \midrule
+        0.4 &   5.395964 &  2.539999 &   6.582867 \\
+        0.5 &   5.076245 &  3.047503 &   6.582867 \\
+        0.7 &   4.635804 &  1.861457 &   6.582867 \\
+        \bottomrule \\
+        \end{tabular}
+    \caption{Davies Bouldin index for the reduced credit card dataset clustered by the mountain algorithm.}
+    \label{tab:c2_db_m}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+    \toprule
+    $\sigma$ &    euclidean &         cosine &    cityblock \\
+    \midrule
+    0.4 &  2612.705876 &   41225.158046 &  4029.893595 \\
+    0.5 &  3689.213460 &   58473.394701 &  4029.893595 \\
+    0.7 &  3966.374184 &  110716.512521 &  4029.893595 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Calinski-Harabasz score for the reduced credit card dataset clustered by the mountain algorithm.}
+    \label{tab:c2_ch_m}
+    \end{table}
+    
+    In Tables \ref{tab:c2_db_m} and \ref{tab:c2_ch_m} are shown the validity indices for the clustering in the reduced dataset.
+    
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        $\sigma$ &  euclidean &    cosine &  cityblock \\
+        \midrule
+        0.4 &   0.891413 &  0.967157 &   0.946406 \\
+        0.5 &   0.884992 &  0.878476 &   0.891413 \\
+        0.7 &   0.884992 &  0.865683 &   0.884992 \\
+        \bottomrule \\
+        \end{tabular}
+    \caption{Davies Bouldin index for the embbeded credit card dataset clustered by the mountain algorithm.}
+    \label{tab:ce_db_m}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        $\sigma$ &      euclidean &         cosine &      cityblock \\
+        \midrule
+        0.4 &  198415.832838 &  193511.849750 &  188520.438083 \\
+        0.5 &  208251.768500 &  207307.628003 &  198415.832838 \\
+        0.7 &  208251.768500 &  217172.104734 &  208251.768500 \\
+        \bottomrule \\
+        \end{tabular}
+    \caption{Calinski-Harabasz score for the embbeded credit card dataset clustered by the mountain algorithm.}
+    \label{tab:ce_ch_m}
+\end{table}
+
 \section{Conclusions}
 
 \nocite{*}
