@@ -501,269 +501,338 @@ Both datasets contain groundtruths for the classes of each sample. The previousl
     \label{fig:mon-iris}
 \end{figure}
 
+\subsubsection{k-means clustering}
+For this algorithm, we used as a parameter $k$, number of clusters found by the subtractive and mountain clustering algorithm. Also, we took into account the different metrics proposed and calculated the validity indices for each one of the datasets.\\
 
-\subsection{Credit card dataset}
-This dataset includes two classes, highly unbalanced: fraud or not fraud.
-\subsubsection{Subtractive clustering}
-    In Tables \ref{tab:c1_n_s}, \ref{tab:c2_n_s} and \ref{tab:ce_n_s} are shown the number of clusters found for the three datasets of credit card fraud. In this case, we observe that the cosine norm achieves 2 clusters, the expected ones. But probably more clusters are not a wrong performance, rather than a different form of viewing the data. We will refer then to the validation indices to see when the performance is better. Also, in Figure~\ref{fig:credit_s_i} is shown the initial density function for the credit card reduced dataset and $r_a = 0.5$, with the euclidean distance. Figure~\ref{fig:credit_s_f} shows the final state.
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &  cosine &  cityblock \\
-        \midrule
-        0.4 &         10 &       2 &         52 \\
-        0.5 &          7 &       2 &         21 \\
-        0.7 &          4 &       2 &          8 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Number of clusters found by the subtractive algorithm for the credit card dataset.}
-        \label{tab:c1_n_s}
-    \end{table}
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &  cosine &  cityblock \\
-        \midrule
-        0.4 &          8 &       2 &         23 \\
-        0.5 &          5 &       2 &         11 \\
-        0.7 &          3 &       2 &          5 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Number of clusters found by the subtractive algorithm for the credit card reduced dataset.}
-        \label{tab:c2_n_s}
-    \end{table}
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &  cosine &  cityblock \\
-        \midrule
-        0.4 &         99 &       8 &         99 \\
-        0.5 &         99 &       7 &         99 \\
-        0.7 &         99 &       4 &         99 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Number of clusters found by the subtractive algorithm for the credit card embbeded dataset.}
-        \label{tab:ce_n_s}
-    \end{table}
-    
-    The algorithm has an emergency stopping criteria, the number of iterations. Due to the fact that they are 100, is clear that for the euclidean distance in the embbeded dataset much more clusters are achieved. This may be due to the spatial distribution of the data, as shwon in the results of Figure~\ref{fig:credit_s}.
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &    cosine &  cityblock \\
-        \midrule
-        0.4 &   3.029305 &  0.981477 &   3.374885 \\
-        0.5 &   3.441991 &  0.981142 &   3.349646 \\
-        0.7 &   3.737428 &  0.981221 &   4.300733 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Davies Bouldin index for the credit card dataset clustered by the subtractive algorithm.}
-        \label{tab:c1_db_s}
-    \end{table}
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &     euclidean &         cosine &     cityblock \\
-        \midrule
-        0.4 &  34200.815670 &  181518.597459 &   4712.546985 \\
-        0.5 &  45858.080636 &  181504.729539 &  10983.494778 \\
-        0.7 &  67334.688094 &  181520.031384 &  30413.670844 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Calisnki-Harabsz score for the credit card dataset clustered by the subtractive algorithm.}
-        \label{tab:c1_ch_s}
-    \end{table}
-    
-    In Tables \ref{tab:c1_db_s} and \ref{tab:c1_db_s} are shown the results for the validation of the clustering in the original credit card dataset. We saw that, for the cosine metric the number of clusters found are the expected, and is actually revised by these scores, that classify this metric as the one that performs the better. \\
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &    cosine &  cityblock \\
-        \midrule
-        0.4 &   2.409494 &  0.875412 &   3.139200 \\
-        0.5 &   2.088824 &  0.875412 &   2.601788 \\
-        0.7 &   1.468652 &  0.875644 &   3.157173 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Davies Bouldin index for the credit card reduced dataset clustered by the subtractive algorithm.}
-        \label{tab:c2_db_s}
-    \end{table}
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &      euclidean &         cosine &     cityblock \\
-        \midrule
-        0.4 &   47725.987561 &  210512.707501 &  12023.907405 \\
-        0.5 &   92681.517486 &  210512.707501 &  31914.695617 \\
-        0.7 &  113693.471190 &  210511.841004 &  59832.246699 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Calisnki-Harabsz score for the reduced credit card dataset clustered by the subtractive algorithm.}
-        \label{tab:c2_ch_s}
-    \end{table}
-    
-    In Tables \ref{tab:c2_db_s} and \ref{tab:c2_ch_s} are shown the indices for the reduced dataset by PCA. Again, the performance shown by these corresponds to the fact that the cosine metric achieves the expected number of clusters.
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &  euclidean &    cosine &  cityblock \\
-        \midrule
-        0.4 &   1.080875 &  1.176533 &   1.253805 \\
-        0.5 &   1.050448 &  1.093338 &   1.333077 \\
-        0.7 &   0.953949 &  0.866116 &   1.043586 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Davies Bouldin index for the credit card embbeded dataset clustered by the subtractive algorithm.}
-        \label{tab:ce_db_s}
-    \end{table}
-    
-    \begin{table}[ht!]
-        \centering
-        \begin{tabular}{lrrr}
-        \toprule
-        $r_a$ &      euclidean &         cosine &      cityblock \\
-        \midrule
-        0.4 &   83056.373617 &  174368.043596 &   77677.563496 \\
-        0.5 &  109156.916197 &  185793.584797 &   88929.724177 \\
-        0.7 &  142020.902180 &  217192.867615 &  116444.149920 \\
-        \bottomrule \\
-        \end{tabular}
-        \caption{Calisnki-Harabsz score for the reduced credit card dataset clustered by the subtractive algorithm.}
-        \label{tab:ce_ch_s}
-    \end{table}
-    
-    Finally, Tables \ref{tab:ce_db_s} and \ref{tab:ce_ch_s} are shown the validity indices or the embbeded dataset. These indices show a poor performance in all cases, reflecting the amount of clusters found by the algorithm in this particular dataset. Probably, the information given by the embbeding is not enough to show the full structure of the data.
-    
-    \begin{figure}[ht!]
-        \centering
-        \includegraphics[scale = 0.4]{figures/credit/credit_s_i.png}
-        \caption{Initial density function for the credit card dataset in the subtractive clustering algorithm.}
-        \label{fig:credit_s_i}
-    \end{figure}
-    
-    \begin{figure}[ht!]
-        \centering
-        \includegraphics[scale = 0.4]{figures/credit/credit_s_f.png}
-        \caption{Final density function for the credit card dataset in the subtractive clustering algorithm.}
-        \label{fig:credit_s_f}
-    \end{figure}
-    
-    \begin{figure}[ht!]
-        \centering
-        \includegraphics[scale = 0.4]{figures/credit/credit_s.png}
-        \caption{Clustering for the credit card dataset in the subtractive clustering algorithm.}
-        \label{fig:credit_s}
-    \end{figure}
-\subsubsection{Mountain clustering} Tables \ref{tab:c2_n_m} and \ref{tab:ce_n_m} show the number of clusters found by the mountain algorithm in the embbeded and reduced dataset, with variations in the smoothing paramenter $\sigma$ and the metric.
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+k &  euclidean &    cosine &  cityblock \\
+\midrule
+2 &   0.390944 &  0.390944 &   0.432572 \\
+3 &   0.627713 &  0.768128 &   0.631299 \\
+5 &   1.050796 &  1.068637 &   1.073839 \\
+7 &   1.090907 &  1.023752 &   1.093764 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Davis Bouldin index for the  iris dataset clustered by the k-means.}
+        \label{tab:i1_db_km}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+k &   euclidean &      cosine &   cityblock \\
+\midrule
+2 &  497.999891 &  497.999891 &  480.870089 \\
+3 &  621.170676 &  261.714855 &  615.448293 \\
+5 &  378.906136 &  394.653049 &  400.539228 \\
+7 &  343.190723 &  296.886143 &  312.518317 \\
+\bottomrule \\
+\end{tabular}
+   \caption{Calinski Harabasz index for the  iris dataset clustered by the k-means.}
+    \label{tab:i1_ch_km}
+\end{table}
+
+In Tables \ref{tab:i1_db_km} and \ref{tab:i1_ch_km} are shown the validity indices for the iris dataset using different number of cluster centers and the k-means algorithm. As one would expect 
 
 \begin{table}[ht!]
     \centering
    \begin{tabular}{lrrr}
     \toprule
-    $\sigma$ &  euclidean &  cosine &  cityblock \\
+    k &  euclidean &    cosine &  cityblock \\
     \midrule
-    0.4 &          8 &       7 &          2 \\
-    0.5 &          4 &       5 &          2 \\
-    0.7 &          3 &       3 &          2 \\
+    2 &   0.446561 &  2.050121 &   0.446561 \\
+    3 &   0.692282 &  1.978282 &   1.123834 \\
+    5 &   0.677904 &  1.699866 &   0.872046 \\
+    7 &   0.830947 &  2.634747 &   0.942682 \\
     \bottomrule \\
     \end{tabular}
-    \caption{Number of clusters found by the mountain algorithm in the reduced credit card dataset.}
-    \label{tab:c2_n_m}
+
+    \caption{Davis Bouldin index for the augmented iris dataset clustered by the k-means.}
+    \label{tab:i2_db_km}
 \end{table}
 
 \begin{table}[ht!]
     \centering
     \begin{tabular}{lrrr}
     \toprule
-    $\sigma$ &  euclidean &  cosine &  cityblock \\
+    k &   euclidean &    cosine &   cityblock \\
     \midrule
-    0.4 &         10 &       5 &          9 \\
-    0.5 &          9 &       4 &         10 \\
-    0.7 &          9 &       4 &          9 \\
-    \bottomrule \\
+    2 &  538.658115 &  3.665251 &  538.658115 \\
+    3 &  274.139485 &  2.777438 &  273.314739 \\
+    5 &  122.328462 &  3.158810 &  121.696067 \\
+    7 &   72.020897 &  4.419832 &   71.318473 \\
+    \bottomrule\\
     \end{tabular}
-    \caption{Number of clusters found by the mountain algorithm in the embbeded credit card dataset.}
-    \label{tab:ce_n_m}
+    \caption{Calinski Harabasz index for the augmented iris dataset clustered by the k-means.}
+    \label{tab:i2_ch_km}
 \end{table}
 
-In this case, we observe that the number of clusters is reduced in comparison with the subtractive algorithm, however, the metric that only finds the two existing clusters in the dataset is the manhattan, and only in the reduced one. The embbeded one, again, does not seem to provide enough information to perform a good clustering.
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+    \toprule
+    k &  euclidean &    cosine &  cityblock \\
+    \midrule
+    2 &   0.216722 &  0.216722 &   0.216722 \\
+    3 &   0.388003 &  0.423202 &   0.389462 \\
+    5 &   0.733313 &  0.806583 &   0.716881 \\
+    7 &   0.815055 &  1.537590 &   0.710355 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Davis Bouldin index for the embbeded iris dataset clustered by the k-means.}
+    \label{tab:i2e_db_km}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+    \toprule
+    k &    euclidean &       cosine &    cityblock \\
+    \midrule
+    2 &  1626.713464 &  1626.713464 &  1626.713464 \\
+    3 &  2889.067753 &  2055.146690 &  2865.014582 \\
+    5 &  2007.575346 &  1598.184855 &  3033.948243 \\
+    7 &  2752.850581 &  1104.080592 &  2367.108834 \\
+    \bottomrule\\
+    \end{tabular}
+\caption{Calinski Harabasz index for the embbeded iris dataset clustered by the k-means.}
+    \label{tab:ie_ch_km}
+\end{table}
+
+\subsubsection{c-means clustering}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &  euclidean &    cosine &  cityblock \\
+\midrule
+2 &   0.390944 &  0.390944 &   0.432572 \\
+3 &   0.627713 &  0.723240 &   0.634940 \\
+5 &   1.250634 &  2.024434 &   1.116347 \\
+7 &   1.242524 &  1.768239 &   2.299770 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Davies Bouldin index for the iris dataset clustered by the c-means algorithms}
+    \label{tab:i1_db_c}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &   euclidean &      cosine &   cityblock \\
+\midrule
+2 &  497.999891 &  497.999891 &  480.870089 \\
+3 &  621.170676 &  503.444361 &  610.008589 \\
+5 &  382.886459 &  218.393685 &  398.329348 \\
+7 &  306.272110 &  138.972782 &  255.833890 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Calinski-Harabasz score for the iris dataset clustered by the c-means algorithm.}
+    \label{tab:i1_ch_c}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &  euclidean &    cosine &  cityblock \\
+\midrule
+2 &   0.446561 &  4.206418 &   0.633145 \\
+3 &   0.615052 &  2.110445 &   0.633145 \\
+5 &   0.857268 &  4.773747 &   1.016935 \\
+7 &   1.448554 &  1.605220 &   1.401289 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Davies Bouldin index for the augmented iris dataset clustered by the c-means algorithms}
+    \label{tab:i2_db_c}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &   euclidean &     cosine &   cityblock \\
+\midrule
+2 &  538.658115 &   0.895073 &  291.212797 \\
+3 &  354.137296 &   5.245520 &  291.212797 \\
+5 &  221.695808 &   4.462668 &  217.618208 \\
+7 &  178.374197 &  13.508430 &  178.359676 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Calinski-Harabasz score for the augmented iris dataset clustered by the c-means algorithm.}
+    \label{tab:i2_ch_c}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &  euclidean &    cosine &  cityblock \\
+\midrule
+2 &   0.216722 &  0.216722 &   0.216722 \\
+3 &   0.490804 &  0.421414 &   0.389462 \\
+5 &   0.725335 &  0.797240 &   0.739533 \\
+7 &   0.980847 &  1.246126 &   0.814877 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Davies Bouldin index for the embbeded iris dataset clustered by the c-means algorithms}
+    \label{tab:ie_db_c}
+\end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+\toprule
+c &    euclidean &       cosine &    cityblock \\
+\midrule
+2 &  1626.713464 &  1626.713464 &  1626.713464 \\
+3 &   859.503927 &  2336.157328 &  1626.713464 \\
+5 &  2983.511715 &  1733.911811 &  2870.216951 \\
+7 &  2694.962314 &  1278.579394 &  2809.017173 \\
+\bottomrule \\
+\end{tabular}
+    \caption{Calinski-Harabasz score for the augmented iris dataset clustered by the c-means algorithm.}
+    \label{tab:ie_ch_c}
+\end{table}
+
+\subsubsection{k-medians clustering}
 
 \begin{table}[ht!]
     \centering
     \begin{tabular}{lrrr}
         \toprule
-        $\sigma$ &  euclidean &    cosine &  cityblock \\
+        k &  euclidean &    cosine &  cityblock \\
         \midrule
-        0.4 &   5.395964 &  2.539999 &   6.582867 \\
-        0.5 &   5.076245 &  3.047503 &   6.582867 \\
-        0.7 &   4.635804 &  1.861457 &   6.582867 \\
-        \bottomrule \\
+        2 &   0.390944 &  0.390944 &   0.390944 \\
+        3 &   0.723271 &  0.877327 &   0.635719 \\
+        5 &   1.001479 &  1.773590 &   1.059862 \\
+        7 &   1.243207 &  2.032079 &   1.211970 \\
+        \bottomrule\\
         \end{tabular}
-    \caption{Davies Bouldin index for the reduced credit card dataset clustered by the mountain algorithm.}
-    \label{tab:c2_db_m}
+    \caption{Davies Bouldin index for the iris dataset clustered by the k-medians algorithm.}
+    \label{tab:i1_db_k}
 \end{table}
 
 \begin{table}[ht!]
     \centering
-    \begin{tabular}{lrrr}
+   \begin{tabular}{lrrr}
     \toprule
-    $\sigma$ &    euclidean &         cosine &    cityblock \\
+    k &   euclidean &      cosine &   cityblock \\
     \midrule
-    0.4 &  2612.705876 &   41225.158046 &  4029.893595 \\
-    0.5 &  3689.213460 &   58473.394701 &  4029.893595 \\
-    0.7 &  3966.374184 &  110716.512521 &  4029.893595 \\
+    2 &  497.999891 &  497.999891 &  497.999891 \\
+    3 &  621.170676 &  387.292106 &  607.470606 \\
+    5 &  396.983499 &  206.982144 &  343.632905 \\
+    7 &  243.888933 &  129.490532 &  264.817439 \\
     \bottomrule \\
     \end{tabular}
-    \caption{Calinski-Harabasz score for the reduced credit card dataset clustered by the mountain algorithm.}
-    \label{tab:c2_ch_m}
+    \caption{Calinski Harabsz score for the iris dataset clustered by the k-medians algorithm.}
+    \label{tab:i1_ch_k}
     \end{table}
     
-    In Tables \ref{tab:c2_db_m} and \ref{tab:c2_ch_m} are shown the validity indices for the clustering in the reduced dataset.
-    
+    \begin{table}[ht!]
+        \centering
+        \begin{tabular}{lrrr}
+        \toprule
+        k &  euclidean &    cosine &  cityblock \\
+        \midrule
+        2 &   2.030315 &  2.050757 &   1.663545 \\
+        3 &   1.851582 &  1.932578 &   1.710490 \\
+        5 &   1.246690 &  2.337498 &   3.811988 \\
+        7 &   1.551410 &  1.689764 &   1.417060 \\
+        \bottomrule
+        \end{tabular}
+        \caption{Davies Bouldin index for the augmented iris dataset clustered by the k-medians algorithm.}
+    \label{tab:i2_db_k}
+    \end{table}
+
+
 \begin{table}[ht!]
     \centering
     \begin{tabular}{lrrr}
-        \toprule
-        $\sigma$ &  euclidean &    cosine &  cityblock \\
-        \midrule
-        0.4 &   0.891413 &  0.967157 &   0.946406 \\
-        0.5 &   0.884992 &  0.878476 &   0.891413 \\
-        0.7 &   0.884992 &  0.865683 &   0.884992 \\
-        \bottomrule \\
-        \end{tabular}
-    \caption{Davies Bouldin index for the embbeded credit card dataset clustered by the mountain algorithm.}
-    \label{tab:ce_db_m}
+    \toprule
+    k &  euclidean &    cosine &  cityblock \\
+    \midrule
+    2 &   7.494573 &  2.094386 &   1.077398 \\
+    3 &   1.176475 &  4.798218 &   1.004791 \\
+    5 &  91.956606 &  2.520011 &   1.035365 \\
+    7 &  54.780219 &  1.790446 &   8.107000 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Calinski Harabsz score for the iris augmented dataset clustered by the k-medians algorithm}
+    \label{tab:i2_ch_k}
 \end{table}
 
 \begin{table}[ht!]
     \centering
     \begin{tabular}{lrrr}
-        \toprule
-        $\sigma$ &      euclidean &         cosine &      cityblock \\
-        \midrule
-        0.4 &  198415.832838 &  193511.849750 &  188520.438083 \\
-        0.5 &  208251.768500 &  207307.628003 &  198415.832838 \\
-        0.7 &  208251.768500 &  217172.104734 &  208251.768500 \\
-        \bottomrule \\
-        \end{tabular}
-    \caption{Calinski-Harabasz score for the embbeded credit card dataset clustered by the mountain algorithm.}
-    \label{tab:ce_ch_m}
+    \toprule
+    k &  euclidean &    cosine &  cityblock \\
+    \midrule
+    2 &   0.216722 &  0.216722 &   0.216722 \\
+    3 &   0.503031 &  0.393918 &   0.390287 \\
+    5 &   0.730190 &  1.101565 &   0.690618 \\
+    7 &   0.797229 &  1.125930 &   0.872588 \\
+    \bottomrule \\
+    \end{tabular}
+    \caption{Davies Bouldin index for the embbeded iris dataset clustered by the k-medians algorithm.}
+    \label{tab:ie_db_k}
 \end{table}
+
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{lrrr}
+    \toprule
+    k &    euclidean &       cosine &    cityblock \\
+    \midrule
+    2 &  1626.713464 &  1626.713464 &  1626.713464 \\
+    3 &   859.784900 &  2794.486490 &  2854.605178 \\
+    5 &  2991.839844 &  1830.284769 &  1240.660834 \\
+    7 &  2744.880380 &  1052.571840 &  2337.767527 \\
+    \bottomrule \\
+    \end{tabular}
+
+    \caption{Calinski Harabsz score for the iris embbeded dataset clustered by the k-medians algorithm}
+    \label{tab:ie_ch_k}
+\end{table}
+
+\subsubsection{Comparison of the methods}
+In Figures~\ref{fig:k2}, \ref{fig:k3}, \ref{fig:k4} and \ref{fig:k7} are shown the different centers provided by the different algorithms explored in this work, for the iris dataset.
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.4]{figures/iris/k2.png}
+    \caption{Clusters given by different methods, $k = 2$.}
+    \label{fig:k2}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.4]{figures/iris/k3.png}
+    \caption{Clusters given by different methods, $k = 3$.}
+    \label{fig:k3}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.4]{figures/iris/k4.png}
+    \caption{Clusters given by different methods, $k = 4$.}
+    \label{fig:k4}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[scale = 0.4]{figures/iris/k7.png}
+    \caption{Clusters given by different methods, $k = 7$.}
+    \label{fig:k7}
+\end{figure}
+
+Is clear that, even when the number of centers are the same, they vary in terms of localization, sometimes more than others. The three algorithms that need the number of centers tend to give more similar ones, while the ones that explore the whole space differ more in this particular dataset.
+\input{credit}
 
 \section{Conclusions}
 
